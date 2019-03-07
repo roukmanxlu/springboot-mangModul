@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<configuration>
+	<property name="logRoot" value="D:/logs" />
+	<property name="logName" value="console" />
+	<property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{sessionId}] %-5level [%thread] %logger{80} :%msg%n" />
+	
+	<appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${pattern}</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="DEFAULT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<file>${logRoot}/${logName}.log</file>
+			<!-- 滚动策略 -->
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<fileNamePattern>${logRoot}/%d{yyyy-MM-dd}/${logName}.log-%i.%d{yyyy-MM-dd}.zip</fileNamePattern>
+				<maxHistory>100</maxHistory>
+				<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+					<MaxFileSize>200MB</MaxFileSize>
+				</TimeBasedFileNamingAndTriggeringPolicy>
+			</rollingPolicy>
+			<encoder>
+				<pattern>${pattern}</pattern>
+			</encoder>
+	</appender>
+	
+	<appender name="ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<file>${logRoot}/error.log</file>
+			<!-- 只纪录error级别的日志 -->
+			<filter class="ch.qos.logback.classic.filter.LevelFilter">
+				<level>ERROR</level>
+				<!-- 匹配就接受 -->
+				<onMatch>ACCEPT</onMatch>
+				<!-- 反之就禁止 -->
+				<onMismatch>DENY</onMismatch>
+			</filter>
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<fileNamePattern>${logRoot}/%d{yyyy-MM-dd}/error.log-%i.%d{yyyy-MM-dd}.zip</fileNamePattern>
+
+				<!--日志保留天数设置-->
+				<maxHistory>30</maxHistory>
+				<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+					<MaxFileSize>100MB</MaxFileSize>
+				</TimeBasedFileNamingAndTriggeringPolicy>
+			</rollingPolicy>
+			<encoder>
+				<pattern>${pattern}</pattern>
+			</encoder>
+		</appender>
+	
+	<root level="INFO">
+		<appender-ref ref="CONSOLE-APPENDER" />
+		<appender-ref ref="DEFAULT-APPENDER"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</root>
+</configuration>
