@@ -39,11 +39,11 @@ public class Merchant {
 
     private String remark;
 
-    private Short superior;
+    private BigDecimal superior;
 
     private String merType;
 
-    private Short recommenderId;
+    private BigDecimal recommenderId;
 
     private BigDecimal profitRate;
 
@@ -223,11 +223,11 @@ public class Merchant {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Short getSuperior() {
+    public BigDecimal getSuperior() {
         return superior;
     }
 
-    public void setSuperior(Short superior) {
+    public void setSuperior(BigDecimal superior) {
         this.superior = superior;
     }
 
@@ -239,11 +239,11 @@ public class Merchant {
         this.merType = merType == null ? null : merType.trim();
     }
 
-    public Short getRecommenderId() {
+    public BigDecimal getRecommenderId() {
         return recommenderId;
     }
 
-    public void setRecommenderId(Short recommenderId) {
+    public void setRecommenderId(BigDecimal recommenderId) {
         this.recommenderId = recommenderId;
     }
 

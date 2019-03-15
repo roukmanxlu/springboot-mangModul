@@ -11,6 +11,8 @@ public interface MerchantMapper {
     Merchant selectByPrimaryKey(int id);
 
     List<Merchant> selectAll();
+    
+    List<Merchant> selectMerchant(String accountNo);
 
     int updateByPrimaryKey(Merchant record);
 }

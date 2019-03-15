@@ -1,56 +1,22 @@
 server:
   port: 8087
 
+#激活测试环境写dev,生产环境写product
+#多数据源的切换,当然也可以用其他名称,
+#不一定是dev《application-dev.yml》和product《application-product.yml》
 spring:
-  datasource:
-    name: dev
-    url: jdbc:oracle:thin:@localhost:1521:orcl
-    username: system
-    password: minqing
-    type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: oracle.jdbc.OracleDriver
-    filters: stat
-    maxActive: 20
-    initialSize: 1
-    maxWait: 60000
-    minIdle: 1
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select 'x' from dual
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxOpenPreparedStatements: 20
-  application:
-    name: example-mybatis
-  devtools:
-    restart:
-      enabled: true
-###rabbitMQ####
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: minqing
-#    password: minqing
-#打印sql日志控制
-logging:
-  level:
-    com:
-      minqing:
-        service:
-           mapper: debug
-mybatis:
-  typeAliasesPackage: com.minqing.service.entity
-  mapperLocations: classpath:mapper/*.xml
-  configLocation: classpath:mybatis-config.xml
-
-# 异步线程配置
-# 配置核心线程数
-#async.executor.thread.core_pool_size: 10
-## 配置最大线程数
-#async.executor.thread.max_pool_size: 14
-## 配置队列大小
-#async.executor.thread.queue_capacity: 40000
-## 配置线程池中的线程的名称前缀
-#async.executor.thread.name.prefix: async-service-
+  profiles:
+    active:
+    - product
+    
+  mail:
+    host: smtp.freemypal.com
+    username: mq@freemypal.com
+    port: 25
+    password: 361minqing
+    default-encoding: UTF-8
+    properties:
+              mail.smtp.socketFactory.fallback: true
+              mail.smtp.starttls.enable: true
+         
+ 

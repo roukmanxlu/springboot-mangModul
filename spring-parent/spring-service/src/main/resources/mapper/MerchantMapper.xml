@@ -41,6 +41,15 @@
     <result column="COMPANY" property="company" jdbcType="VARCHAR" />
     <result column="IS_CANCEL" property="isCancel" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <sql id="sql_baseColoum">
+  	ID, ACCOUNT_NO, REAL_NAME, PWD, CARD_TYPE, CARD_NO, MOBILE, TELPHONE, SEX, 
+    EMAIL, ADDRESS, BANK_DEPOSIT, ACCOUNT_NAME, BANK_ACCT_NO, DT_CREATE, DT_LASTMOD, 
+    OPERATORS, REMARK, SUPERIOR, MER_TYPE, RECOMMENDER_ID, PROFIT_RATE, STATUS, MER_LEVEL, 
+    ORG_CODE, FAPIAO_FLAG, MER_CODE, ACTIVE_STATU, BRAND_ID, BUSINESS_LOGO, SENSITIVE_INF, 
+    YIN_JIA, MOBILE_STATU, DAILY, BANK_FIRM, EFF_CODE, COMPANY, IS_CANCEL
+  </sql>
+  
   <delete id="deleteByPrimaryKey" parameterType="int" >
     delete from T_MERCHANT
     where ID = #{id,jdbcType=DECIMAL}
@@ -123,12 +132,11 @@
     from T_MERCHANT
     where ID = #{id,jdbcType=DECIMAL}
   </select>
+  
   <select id="selectAll" resultMap="BaseResultMap" >
-    select ID, ACCOUNT_NO, REAL_NAME, PWD, CARD_TYPE, CARD_NO, MOBILE, TELPHONE, SEX, 
-    EMAIL, ADDRESS, BANK_DEPOSIT, ACCOUNT_NAME, BANK_ACCT_NO, DT_CREATE, DT_LASTMOD, 
-    OPERATORS, REMARK, SUPERIOR, MER_TYPE, RECOMMENDER_ID, PROFIT_RATE, STATUS, MER_LEVEL, 
-    ORG_CODE, FAPIAO_FLAG, MER_CODE, ACTIVE_STATU, BRAND_ID, BUSINESS_LOGO, SENSITIVE_INF, 
-    YIN_JIA, MOBILE_STATU, DAILY, BANK_FIRM, EFF_CODE, COMPANY, IS_CANCEL
+    select <include refid="sql_baseColoum"/>
     from T_MERCHANT
   </select>
+  
+  
 </mapper>
