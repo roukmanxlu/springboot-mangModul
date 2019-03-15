@@ -18,5 +18,6 @@ spring:
     properties:
               mail.smtp.socketFactory.fallback: true
               mail.smtp.starttls.enable: true
-         
- 
+              
+##导出execl一个sheet的数据大小        
+execl.data: 1000

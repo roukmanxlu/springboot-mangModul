@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -19,17 +20,23 @@ public  class MapperTest extends TmallApplicationTests{
    /* @Autowired
     private TemplateEngine templateEngine;*/
  
+	@Value("${execl.data}")
+	private String execlDate;
     @Value("${spring.mail.username}")
     private String sender; //读取配置文件中的参数
 	@Value("${async.executor.thread.core_pool_size}")
 	private String poolSize;
 	@Autowired
 	private MerchantMapper merchantMapper;
+	@Autowired
+	private  Environment ev;
 
 	
 	@Test
 	public void test() {
 		System.out.println("9999999999999999999999999"+poolSize+","+sender);
+		System.out.println(execlDate);
+		System.out.println(ev.getProperty("async.executor.thread.core_pool_size"));
 	}
 	
 	@Test

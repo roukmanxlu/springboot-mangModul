@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +33,10 @@ public class MerchantController extends BaseController{
 	@Autowired
 	private MerchantService merchantService;
 	
-	@Value(value="${async.executor.thread.core_pool_size}")
+	@Value("${async.executor.thread.core_pool_size}")
 	private String poolSize;
+	@Value("${execl.data}")
+	private String execlDate;
 	
 	@RequestMapping(value="getMerchant",method=RequestMethod.GET)
 	@ResponseBody
@@ -44,15 +48,32 @@ public class MerchantController extends BaseController{
 		return jsonObject.toString();
 	}
 	
+	//单个sheet导出
 	@RequestMapping(value="export",method=RequestMethod.GET)
-	public void selectMerchant(String accountNo,HttpServletResponse response) {
+	public void selectMerchant(HttpServletResponse response) {
 		List<Merchant> merchants = merchantService.selectAll();
 		List<Map<Integer, Object>> mapList = inverset(merchants);
 		if(mapList.size()>0) {
 			String[] headers = new String[] {"代理商账号","代理商名称","手机号","身份证","地址"};
-			ExeclUtils.fillExeclDate(mapList, headers, "代理商信息详情表", response);
+			String sheetName ="代理商信息详情表";
+			Workbook wb = ExeclUtils.fillExeclDate(mapList, headers, sheetName,new HSSFWorkbook());
+			ExeclUtils.exportExecl(wb, response, sheetName);
 		}
 	}
+	
+	//多个sheet导出
+	@RequestMapping(value="export2",method=RequestMethod.GET)
+	public void export2(HttpServletResponse response) {
+		List<Merchant> merchants = merchantService.selectAll();
+		List<Map<Integer, Object>> mapList = inverset(merchants);
+		if(mapList.size()>0) {
+			String[] headers = new String[] {"代理商账号","代理商名称","手机号","身份证","地址"};
+			String sheetName ="代理商信息详情表";
+			Workbook wb =  ExeclUtils.manageSheet(Integer.parseInt(execlDate),mapList, headers, sheetName);
+			ExeclUtils.exportExecl(wb, response, sheetName);
+		}
+	}
+	
 	
 	public List<Map<Integer, Object>> inverset(List<Merchant> merchants){
 		List<Map<Integer, Object>> mapList = new ArrayList<Map<Integer, Object>>();
