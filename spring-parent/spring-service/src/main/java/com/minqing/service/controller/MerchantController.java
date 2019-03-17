@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.support.MultipartFilter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.minqing.service.entity.Merchant;

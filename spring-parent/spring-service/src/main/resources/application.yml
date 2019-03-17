@@ -18,6 +18,12 @@ spring:
     properties:
               mail.smtp.socketFactory.fallback: true
               mail.smtp.starttls.enable: true
-              
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 20MB
+                       
 ##导出execl一个sheet的数据大小        
 execl.data: 1000
+##本地文件存储的根目录
+local.images: D:\imges
